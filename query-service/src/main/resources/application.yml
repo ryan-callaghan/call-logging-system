@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: query-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/calllogging
+    username: admin
+    password: password123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8081
+
+logging:
+  level:
+    com.calllogging: DEBUG

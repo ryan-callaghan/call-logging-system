@@ -1,0 +1,15 @@
+{
+  "namespace": "com.calllogging.events",
+  "type": "record",
+  "name": "SessionEvent",
+  "fields": [
+    {"name": "eventId", "type": "string"},
+    {"name": "timestamp", "type": "long"},
+    {"name": "sessionId", "type": "string"},
+    {"name": "userId", "type": "string"},
+    {"name": "eventType", "type": {"type": "enum", "name": "SessionEventType", "symbols": ["SESSION_START", "SESSION_END", "SESSION_TIMEOUT"]}},
+    {"name": "ipAddress", "type": ["null", "string"], "default": null},
+    {"name": "userAgent", "type": ["null", "string"], "default": null},
+    {"name": "location", "type": ["null", "string"], "default": null}
+  ]
+}

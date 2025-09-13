@@ -1,0 +1,15 @@
+{
+  "namespace": "com.calllogging.events",
+  "type": "record",
+  "name": "CallEvent",
+  "fields": [
+    {"name": "eventId", "type": "string"},
+    {"name": "timestamp", "type": "long"},
+    {"name": "callId", "type": "string"},
+    {"name": "userId", "type": "string"},
+    {"name": "eventType", "type": {"type": "enum", "name": "CallEventType", "symbols": ["CALL_START", "CALL_END", "CALL_HOLD", "CALL_RESUME"]}},
+    {"name": "phoneNumber", "type": ["null", "string"], "default": null},
+    {"name": "duration", "type": ["null", "long"], "default": null},
+    {"name": "metadata", "type": {"type": "map", "values": "string"}}
+  ]
+}
