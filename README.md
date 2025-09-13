@@ -1,5 +1,3 @@
-# call-logging-system
-
 # Call Logging System
 
 A distributed microservices-based call logging and analytics system built with Spring Boot, Kafka, and Elasticsearch.
