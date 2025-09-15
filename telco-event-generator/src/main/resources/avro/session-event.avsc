@@ -1,0 +1,67 @@
+{
+  "type": "record",
+  "name": "SessionEvent",
+  "namespace": "com.telco.events.avro",
+  "doc": "Represents a data session establishment or teardown event",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string",
+      "doc": "Unique identifier for the event"
+    },
+    {
+      "name": "eventType",
+      "type": {
+        "type": "enum",
+        "name": "SessionEventType",
+        "symbols": ["SESSION_START", "SESSION_END"]
+      },
+      "doc": "Type of session event"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis",
+      "doc": "Event timestamp in milliseconds"
+    },
+    {
+      "name": "phoneNumber",
+      "type": "string",
+      "doc": "Phone number of the device"
+    },
+    {
+      "name": "sessionId",
+      "type": "string",
+      "doc": "Unique identifier for the data session"
+    },
+    {
+      "name": "imsi",
+      "type": "string",
+      "doc": "International Mobile Subscriber Identity"
+    },
+    {
+      "name": "apn",
+      "type": "string",
+      "doc": "Access Point Name"
+    },
+    {
+      "name": "networkQuality",
+      "type": {
+        "type": "record",
+        "name": "NetworkQuality",
+        "fields": [
+          {"name": "signalStrength", "type": "int", "doc": "Signal strength in dBm"},
+          {"name": "bandwidth", "type": "long", "doc": "Available bandwidth in bps"},
+          {"name": "networkType", "type": "string", "doc": "Network type (4G, 5G, etc.)"}
+        ]
+      },
+      "doc": "Network quality metrics at session time"
+    },
+    {
+      "name": "dataUsage",
+      "type": ["null", "long"],
+      "default": null,
+      "doc": "Data usage in bytes (only for SESSION_END events)"
+    }
+  ]
+}

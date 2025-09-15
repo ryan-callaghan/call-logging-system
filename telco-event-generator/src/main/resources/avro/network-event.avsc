@@ -1,0 +1,48 @@
+{
+  "type": "record",
+  "name": "NetworkEvent",
+  "namespace": "com.telco.events.avro",
+  "doc": "Represents a network monitoring event",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string",
+      "doc": "Unique identifier for the event"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis",
+      "doc": "Event timestamp in milliseconds"
+    },
+    {
+      "name": "cellTowerId",
+      "type": "string",
+      "doc": "Identifier of the monitored cell tower"
+    },
+    {
+      "name": "metrics",
+      "type": {
+        "type": "record",
+        "name": "NetworkMetrics",
+        "fields": [
+          {"name": "latency", "type": "double", "doc": "Network latency in milliseconds"},
+          {"name": "packetLoss", "type": "double", "doc": "Packet loss percentage (0.0-1.0)"},
+          {"name": "jitter", "type": "double", "doc": "Network jitter in milliseconds"},
+          {"name": "throughput", "type": "long", "doc": "Network throughput in bps"},
+          {"name": "activeConnections", "type": "int", "doc": "Number of active connections"}
+        ]
+      },
+      "doc": "Network performance metrics"
+    },
+    {
+      "name": "alertLevel",
+      "type": {
+        "type": "enum",
+        "name": "AlertLevel",
+        "symbols": ["NORMAL", "WARNING", "CRITICAL"]
+      },
+      "doc": "Alert level based on metrics thresholds"
+    }
+  ]
+}
