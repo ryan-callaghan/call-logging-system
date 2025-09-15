@@ -1,0 +1,58 @@
+groups:
+  - name: telco-event-generation
+    rules:
+      - alert: EventGenerationRateDropped
+        expr: rate(telco_events_generated_total[5m]) < 500
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Event generation rate has dropped significantly"
+          description: "Event generation rate is {{ $value }} events/sec, which is below the expected threshold of 500 events/sec"
+
+      - alert: KafkaMessageSendFailures
+        expr: rate(telco_kafka_messages_failed_total[5m]) > 10
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High rate of Kafka message send failures"
+          description: "Kafka message send failure rate is {{ $value }} failures/sec"
+
+      - alert: DataQualityScoreDropped
+        expr: telco_data_quality_score < 90
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Data quality score has dropped below threshold"
+          description: "Current data quality score is {{ $value }}%, which is below the acceptable threshold of 90%"
+
+      - alert: SchemaValidationFailures
+        expr: rate(telco_schema_validation_failure_total[5m]) > 5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High rate of schema validation failures"
+          description: "Schema validation failure rate is {{ $value }} failures/sec"
+
+  - name: kafka-cluster
+    rules:
+      - alert: KafkaClusterDown
+        expr: up{job="kafka-jmx"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Kafka broker is down"
+          description: "Kafka broker {{ $labels.instance }} has been down for more than 1 minute"
+
+      - alert: KafkaHighProducerSendRate
+        expr: kafka_producer_record_send_rate > 5000
+        for: 5m
+        labels:
+          severity: info
+        annotations:
+          summary: "High Kafka producer send rate"
+          description: "Kafka producer send rate is {{ $value }} records/sec"
