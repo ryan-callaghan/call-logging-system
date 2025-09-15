@@ -1,0 +1,56 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: telco-event-generator
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      acks: all
+      retries: 3
+      batch-size: 16384
+      linger-ms: 5
+      buffer-memory: 33554432
+      compression-type: snappy
+      properties:
+        schema.registry.url: ${SCHEMA_REGISTRY_URL:http://localhost:8081}
+        auto.register.schemas: false
+        use.latest.version: true
+
+event-generator:
+  topics:
+    call-events: telco.call.events
+    session-events: telco.session.events
+    network-events: telco.network.events
+  rates:
+    default: 1000
+    max: 10000
+    min: 100
+  phone-number:
+    min: 1000000000
+    max: 9999999999
+  network:
+    base-latency: 50
+    max-jitter: 20
+    packet-loss-probability: 0.01
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    com.telco: DEBUG
+    org.apache.kafka: INFO

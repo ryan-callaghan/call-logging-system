@@ -1,0 +1,66 @@
+{
+  "type": "record",
+  "name": "CallEvent",
+  "namespace": "com.telco.events.avro",
+  "doc": "Represents a call start or end event",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string",
+      "doc": "Unique identifier for the event"
+    },
+    {
+      "name": "eventType",
+      "type": {
+        "type": "enum",
+        "name": "CallEventType",
+        "symbols": ["CALL_START", "CALL_END"]
+      },
+      "doc": "Type of call event"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis",
+      "doc": "Event timestamp in milliseconds"
+    },
+    {
+      "name": "callerPhoneNumber",
+      "type": "string",
+      "doc": "Phone number of the caller"
+    },
+    {
+      "name": "calleePhoneNumber",
+      "type": "string",
+      "doc": "Phone number of the callee"
+    },
+    {
+      "name": "callId",
+      "type": "string",
+      "doc": "Unique identifier for the call session"
+    },
+    {
+      "name": "duration",
+      "type": ["null", "long"],
+      "default": null,
+      "doc": "Call duration in seconds (only for CALL_END events)"
+    },
+    {
+      "name": "cellTowerId",
+      "type": "string",
+      "doc": "Identifier of the cell tower handling the call"
+    },
+    {
+      "name": "location",
+      "type": {
+        "type": "record",
+        "name": "Location",
+        "fields": [
+          {"name": "latitude", "type": "double"},
+          {"name": "longitude", "type": "double"}
+        ]
+      },
+      "doc": "Geographic location of the caller"
+    }
+  ]
+}
